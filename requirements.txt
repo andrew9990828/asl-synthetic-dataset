@@ -1,0 +1,39 @@
+# =====================================================================
+#  requirements.txt
+#  Synthetic ASL Dataset Generator + Training Pipeline
+#
+#  Author: Andrew Bieber
+#
+#  Description:
+#      Python package dependencies for:
+#        • Synthetic dataset generation
+#        • CNN training (classification + regression)
+#        • Visualization + metrics
+#
+#  Note:
+#      Versions are intentionally left flexible unless otherwise needed.
+#      If you want exact pinned versions for reproducibility, I can
+#      generate a fully locked list (pip freeze → polished).
+# =====================================================================
+
+# Core numeric + array libraries
+numpy
+
+# Image loading + drawing
+pillow
+
+# Excel metadata handling
+openpyxl
+
+# PyTorch deep learning framework
+torch
+torchvision
+
+# Visualization + plotting tools
+matplotlib
+
+# ML utilities (metrics, splitting, preprocessing)
+scikit-learn
+
+# Progress bar utilities (for training loops, dataset generation)
+tqdm
