@@ -5,21 +5,25 @@ Focus Areas: Synthetic Data • Deep Learning • Computer Vision • Procedural
 
 ⭐ Overview
 
-This project generates a fully synthetic ASL (American Sign Language) dataset using procedural graphics, geometric variation, and heavy image augmentations — then trains a compact dual-head CNN to classify letters and estimate a synthetic distance scalar.
+This project generates a fully synthetic ASL (American Sign Language) dataset using procedural graphics, geometric variation, and heavy image augmentations — then trains a compact dual-head CNN to:
+
+classify letters (A–Z)
+
+estimate a synthetic distance scalar
 
 You get:
 
-A synthetic dataset generator
+✅ A synthetic dataset generator
 
-A PyTorch dataset loader
+✅ A PyTorch dataset loader
 
-A compact dual-head CNN
+✅ A compact dual-head CNN
 
-A full training loop
+✅ A full end-to-end training loop
 
-Jupyter notebooks for dataset exploration + embedding visualization
+✅ Jupyter notebooks for visualization & debugging
 
-This project demonstrates modern dataset engineering and end-to-end ML experimentation in a clean, reproducible pipeline.
+This project is designed as a clean, reproducible ML pipeline for experimentation, learning, and research.
 
 🚀 Quick Start Guide
 1️⃣ Clone the repository
@@ -42,7 +46,7 @@ pip install -r requirements.txt
 python generate_dataset.py
 
 
-This will create:
+This creates:
 
 asl_abstract_dataset/
     A/
@@ -50,22 +54,25 @@ asl_abstract_dataset/
         A_00001.png
     B/
         ...
-    labels.xlsx
+labels.xlsx
 
 
-Total size depends on IMAGES_PER_LETTER in generate_dataset.py.
+Dataset size depends on IMAGES_PER_LETTER inside generate_dataset.py.
 
 5️⃣ Train the CNN model
 python train_model.py
 
 
-You will see epoch loss values.
+You will see epoch loss outputs.
 
-The final model is saved as:
+The final trained model is stored as:
 
 asl_model.pt
 
-6️⃣ Explore the generated dataset
+6️⃣ Explore the dataset & model inside Jupyter
+
+Launch Jupyter:
+
 jupyter notebook
 
 
@@ -73,20 +80,25 @@ Open:
 
 notebooks/explore_dataset.ipynb
 
-7️⃣ Visualize embeddings (TSNE)
+7️⃣ Visualize embeddings (t-SNE, distance clusters)
 
 Open:
 
+notebooks/inspect_model.ipynb
 notebooks/visualize_embeddings.ipynb
 
 
-This notebook will later include:
+These notebooks include:
 
-TSNE projections
+Feature map visualization
+
+Filter visualization
+
+t-SNE embeddings
 
 Distance vs class separation plots
 
-Embedding space debugging tools
+Debugging tools for CNN representations
 
 📦 Project Structure
 asl-synthetic-dataset/
@@ -94,31 +106,32 @@ asl-synthetic-dataset/
 ├── asl_abstract_dataset/         
 │
 ├── notebooks/
-│   ├── explore_dataset.ipynb     
-│   └── visualize_embeddings.ipynb 
+│   ├── explore_dataset.ipynb
+│   ├── inspect_model.ipynb
+│   └── visualize_embeddings.ipynb
 │
 ├── src/
 │   ├── dataset/
-│   │   ├── augmentations.py      
-│   │   ├── shapes.py             
-│   │   └── dataset_loader.py     
+│   │   ├── augmentations.py
+│   │   ├── shapes.py
+│   │   └── dataset_loader.py
 │   │
 │   ├── ml/
-│   │   ├── metrics.py            
-│   │   └── train_utils.py        
+│   │   ├── metrics.py
+│   │   └── train_utils.py
 │   │
 │   ├── model/
-│       └── small_cnn.py          
+│       └── small_cnn.py
 │
-├── generate_dataset.py           
-├── train_model.py                
+├── generate_dataset.py
+├── train_model.py
 ├── requirements.txt
 └── README.md
 
 🧠 How the Pipeline Works
 1. Procedural Graphics
 
-Each letter A–Z corresponds to one procedural pattern style:
+Each letter A–Z corresponds to a unique procedural pattern family:
 
 line clusters
 
@@ -128,49 +141,63 @@ rectangular pillars
 
 radial spokes
 
-Each image is randomized by:
+Each generated image includes randomization via:
 
 rotation
 
 blur
 
-Perlin-like noise
+perlin-like noise
 
 background jitter
 
-scale tied to a synthetic “distance” label
+geometric variation
+
+distance scalar (controls scale & distortion)
 
 2. Dual-Head CNN
 
-The model predicts:
+The model outputs:
 
-Letter class (26-way classification)
+Letter class (26-way softmax)
 
-Distance scalar (regression)
+Distance regression scalar
 
-Loss:
+Loss function:
 
 CE(class) + 0.25 * MSE(distance)
 
 3. Fully Reproducible Training
 
-A ~15-line clean training script trains everything end-to-end.
+A clean ~15-line training loop handles:
+
+data loading
+
+backprop
+
+optimizer step
+
+loss logging
+
+model saving
+
+Everything is deterministic when using the same seed.
 
 📌 Notes for Researchers
 
-This repo is ideal for:
+This repository is ideal for:
 
 experimenting with synthetic data
 
-training small CNNs
+studying CNN feature extraction
 
 embedding visualization
 
-building reproducible ML demos
+reproducible ML demos
 
-teaching fundamentals
+curriculum teaching material
 
-Possible expansions:
+Possible extensions:
 
 Vision Transformers
 
@@ -180,8 +207,14 @@ Latent-space clustering
 
 Memory-augmented models
 
+Variational shape priors
+
+Procedural graphics expansion
+
 🎉 Final Notes
 
-If you improve this dataset, add shapes, or upgrade the model — feel free to submit a PR.
+If you'd like to extend the dataset, add new shape generators, or improve the CNN,
+feel free to open a PR!
 
-Happy building!
+Happy building & exploring 👋
+— Andrew
