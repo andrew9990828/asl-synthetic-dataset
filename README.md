@@ -1,109 +1,135 @@
-🚀 ASL Abstract Synthetic Dataset + CNN Pipeline
+# 🚀 ASL Abstract Synthetic Dataset + CNN Pipeline
 
-Author: Andrew Bieber
-Focus Areas: Synthetic Data • Deep Learning • Computer Vision • Procedural Generation
+**Author:** Andrew Bieber  
+**Focus Areas:** Synthetic Data • Deep Learning • Computer Vision • Procedural Generation
 
-⭐ Overview
+---
 
-This project generates a fully synthetic ASL (American Sign Language) dataset using procedural graphics, geometric variation, and heavy image augmentations — then trains a compact dual-head CNN to:
+## ⭐ Overview
 
-classify letters (A–Z)
+This project generates a fully synthetic ASL (American Sign Language) dataset using:
 
-estimate a synthetic distance scalar
+- Procedural graphics
+- Geometric variation
+- Heavy image augmentations
 
-You get:
+It then trains a compact dual-head CNN to:
 
-✅ A synthetic dataset generator
+- 🔤 Classify letters (A–Z)
+- 📏 Estimate a synthetic distance scalar
 
-✅ A PyTorch dataset loader
+### What You Get
 
-✅ A compact dual-head CNN
-
-✅ A full end-to-end training loop
-
-✅ Jupyter notebooks for visualization & debugging
+- ✅ A synthetic dataset generator
+- ✅ A PyTorch dataset loader
+- ✅ A compact dual-head CNN
+- ✅ A full end-to-end training loop
+- ✅ Jupyter notebooks for visualization & debugging
 
 This project is designed as a clean, reproducible ML pipeline for experimentation, learning, and research.
 
-🚀 Quick Start Guide
-1️⃣ Clone the repository
+---
+
+## 🚀 Quick Start Guide
+
+### 1️⃣ Clone the repository
+
+```bash
 git clone https://github.com/andrew9990828/asl-synthetic-dataset.git
 cd asl-synthetic-dataset
+```
 
-2️⃣ Create and activate a virtual environment
-Windows:
+### 2️⃣ Create and activate a virtual environment
+
+**Windows:**
+```bash
 python -m venv venv
 venv\Scripts\activate
+```
 
-Mac/Linux:
+**macOS / Linux:**
+```bash
 python3 -m venv venv
 source venv/bin/activate
+```
 
-3️⃣ Install dependencies
+### 3️⃣ Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-4️⃣ Generate the synthetic dataset
+### 4️⃣ Generate the synthetic dataset
+
+```bash
 python generate_dataset.py
-
+```
 
 This creates:
 
+```
 asl_abstract_dataset/
     A/
         A_00000.png
         A_00001.png
     B/
         ...
-labels.xlsx
+    labels.xlsx
+```
 
+> **Note:** Dataset size depends on `IMAGES_PER_LETTER` inside `generate_dataset.py`.
 
-Dataset size depends on IMAGES_PER_LETTER inside generate_dataset.py.
+### 5️⃣ Train the CNN model
 
-5️⃣ Train the CNN model
+```bash
 python train_model.py
+```
 
+You will see epoch loss outputs. The final trained model is saved as:
 
-You will see epoch loss outputs.
-
-The final trained model is stored as:
-
+```
 asl_model.pt
+```
 
-6️⃣ Explore the dataset & model inside Jupyter
+### 6️⃣ Explore the dataset & model inside Jupyter
 
 Launch Jupyter:
 
+```bash
 jupyter notebook
-
+```
 
 Open:
 
+```
 notebooks/explore_dataset.ipynb
+```
 
-7️⃣ Visualize embeddings (t-SNE, distance clusters)
+### 7️⃣ Visualize embeddings (t-SNE, distance clusters)
 
 Open:
 
+```
 notebooks/inspect_model.ipynb
 notebooks/visualize_embeddings.ipynb
-
+```
 
 These notebooks include:
 
-Feature map visualization
+- Feature map visualization
+- Filter visualizations
+- t-SNE embeddings
+- Distance vs class separation plots
+- Tools for debugging CNN representations
 
-Filter visualization
+---
 
-t-SNE embeddings
+## 📦 Project Structure
 
-Distance vs class separation plots
-
-Debugging tools for CNN representations
-
-📦 Project Structure
+```
 asl-synthetic-dataset/
 │
-├── asl_abstract_dataset/         
+├── asl_abstract_dataset/
 │
 ├── notebooks/
 │   ├── explore_dataset.ipynb
@@ -120,101 +146,88 @@ asl-synthetic-dataset/
 │   │   ├── metrics.py
 │   │   └── train_utils.py
 │   │
-│   ├── model/
+│   └── model/
 │       └── small_cnn.py
 │
 ├── generate_dataset.py
 ├── train_model.py
 ├── requirements.txt
 └── README.md
+```
 
-🧠 How the Pipeline Works
-1. Procedural Graphics
+---
 
-Each letter A–Z corresponds to a unique procedural pattern family:
+## 🧠 How the Pipeline Works
 
-line clusters
+### 1. Procedural Graphics
 
-arcs
+Each letter A–Z corresponds to a unique procedural pattern family, such as:
 
-rectangular pillars
+- Line clusters
+- Arcs
+- Rectangular pillars
+- Radial spokes
 
-radial spokes
+Each image includes additional randomization:
 
-Each generated image includes randomization via:
+- Rotation
+- Blur
+- Perlin-like noise
+- Background jitter
+- Geometric variation
+- Distance scalar (controls scale & distortion)
 
-rotation
-
-blur
-
-perlin-like noise
-
-background jitter
-
-geometric variation
-
-distance scalar (controls scale & distortion)
-
-2. Dual-Head CNN
+### 2. Dual-Head CNN
 
 The model outputs:
 
-Letter class (26-way softmax)
+- 🅰️ Letter class (26-way softmax)
+- 📏 Distance regression scalar
 
-Distance regression scalar
+**Loss function:**
 
-Loss function:
-
+```
 CE(class) + 0.25 * MSE(distance)
+```
 
-3. Fully Reproducible Training
+### 3. Fully Reproducible Training
 
 A clean ~15-line training loop handles:
 
-data loading
+- Data loading
+- Backpropagation
+- Optimizer steps
+- Loss logging
+- Model saving
 
-backprop
+Everything is deterministic when using the same random seed.
 
-optimizer step
+---
 
-loss logging
-
-model saving
-
-Everything is deterministic when using the same seed.
-
-📌 Notes for Researchers
+## 📌 Notes for Researchers
 
 This repository is ideal for:
 
-experimenting with synthetic data
+- Experimenting with synthetic data
+- Studying CNN feature extraction
+- Embedding visualization
+- Reproducible ML demos
+- Curriculum teaching material
 
-studying CNN feature extraction
+### Possible Extensions
 
-embedding visualization
+- Vision Transformers
+- Contrastive learning
+- Latent-space clustering
+- Memory-augmented models
+- Variational shape priors
+- Expanded procedural graphics library
 
-reproducible ML demos
+---
 
-curriculum teaching material
+## 🎉 Final Notes
 
-Possible extensions:
+If you'd like to extend the dataset, add new shape generators, or improve the CNN, feel free to open a PR!
 
-Vision Transformers
-
-Contrastive learning
-
-Latent-space clustering
-
-Memory-augmented models
-
-Variational shape priors
-
-Procedural graphics expansion
-
-🎉 Final Notes
-
-If you'd like to extend the dataset, add new shape generators, or improve the CNN,
-feel free to open a PR!
-
-Happy building & exploring 👋
+**Happy building & exploring 👋**  
 — Andrew
